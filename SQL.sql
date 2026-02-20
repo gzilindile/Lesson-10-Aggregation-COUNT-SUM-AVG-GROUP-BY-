@@ -1,12 +1,11 @@
 --Lesson 10 – Aggregations (COUNT, SUM, AVG, GROUP BY)
+
 --SECTION 1 – COUNT Aggregations (10 Questions)
 
 --1. How many total properties are in the database?
 
   select count (*) as Num_Of_Properties
   from property_details
-
-  select * from property_details
 
 --2. How many properties are listed in each province?
 
@@ -60,39 +59,72 @@
    select count (distinct province) as ProvinceCount 
    from property_details
    
-
-   
-====================================================================================================================================
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --SECTION 2 – SUM Aggregations (10 Questions)
 
 --11. What is the total value of all properties combined?
-   select SUM(property_price) as Totalvalue 
+   select SUM(Cast(property_price  as bigint)) as Totalvalue 
    from property_details
 
-   select top 1 * from property_details
-
+  
 --12. What is the total property value per province?  
-      
-     select province, sum(property_price) as totalv
-     from property_details
-     group by province
-
-     SELECT province,
+  
+       SELECT province,
        SUM(CAST(property_price AS BIGINT)) AS TotalValue
-FROM property_details
-GROUP BY province;
+       FROM property_details
+       GROUP BY province
 
 
 --13. What is the total property value per city?
---14. What is the total monthly repayment for all properties?
---15. What is the total monthly repayment per province?
---16. What is the total once-off cost for all properties?
---17. What is the total once-off cost per province?
---18. What is the total property value for Gauteng?
---19. What is the total property value for properties priced above R4,000,000?
---20. What is the total minimum gross monthly income required per province?
+     select city, sum(cast(property_price as bigint)) as total_property_value_per_city
+     from property_details
+     group by city
 
-===========================================================================================================================
+
+--14. What is the total monthly repayment for all properties?
+       select sum(cast(monthly_repayment as bigint)) as total_monthly_repayment_for_all_properties
+       from property_details
+
+--15. What is the total monthly repayment per province?
+       select province, sum(cast(monthly_repayment as bigint)) as  total_monthly_repayment_per_province
+       from property_details
+       group by province
+
+--16. What is the total once-off cost for all properties?
+     select top 2 * from property_details
+       select sum(cast(total_once_off_costs as bigint)) as total_once_off_cost_for_all_properties
+       from property_details
+
+
+--17. What is the total once-off cost per province?
+         
+         select province, sum(cast(total_once_off_costs as bigint)) as total_once_off_cost_per_province
+         from property_details
+         group by province
+
+--18. What is the total property value for Gauteng?
+     
+
+     select  sum(cast(property_price as bigint )) as total_property_value_for_Gauteng
+     from property_details
+     where province ='gauteng'
+
+--19. What is the total property value for properties priced above R4,000,000?
+         
+        select sum(cast(property_price as bigint)) as kn
+        from property_details
+        where property_price > '4000000'
+
+--20. What is the total minimum gross monthly income required per province?
+          
+          select province, sum(cast(min_gross_monthly_income as bigint )) as kk
+          from property_details
+          group by province
+
+
+          Gugu zilindile
+
+ -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --SECTION 3 – AVG Aggregations (10 Questions)
 
 --21. What is the average property price overall?
@@ -106,7 +138,7 @@ GROUP BY province;
 --29. What is the average minimum gross monthly income per province?
 --30. What is the average property price for properties above R3,000,000?
 
-==============================================================================================================================================================
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --SECTION 4 – GROUP BY + Filtering (10 Questions)
 
 --31. Which province has the highest average property price?
