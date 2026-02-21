@@ -128,16 +128,51 @@
 --SECTION 3 – AVG Aggregations (10 Questions)
 
 --21. What is the average property price overall?
---22. What is the average property price per province?
---23. What is the average property price per city?
---24. What is the average number of bedrooms per province?
---25. What is the average number of bathrooms per province?
---26. What is the average floor size per province?
---27. What is the average monthly repayment per province?
---28. What is the average once-off cost per province?
---29. What is the average minimum gross monthly income per province?
---30. What is the average property price for properties above R3,000,000?
+      
+      select avg(cast (property_price as decimal(10,2))) as Overall_price 
+      from property_details
 
+     
+--22. What is the average property price per province?
+       select province, avg(cast(property_price as decimal (10,2))) as avg_prty
+       from property_details
+       group by PROVINCE
+
+--23. What is the average property price per city?
+       select city,avg(cast(property_price as decimal (10,2))) as avg_cty
+       from property_details 
+       group by city 
+
+--24. What is the average number of bedrooms per province?
+        select province,avg(cast(bedrooms as decimal (10,2))) as avgbr
+        from property_details
+        group by PROVINCE
+
+--25. What is the average number of bathrooms per province?
+       select province,avg(cast(bathrooms as decimal (10,2))) as avgbr
+        from property_details
+        group by PROVINCE
+--26. What is the average floor size per province?
+       select province,avg(cast(floor_size as decimal (10,2))) as avgbr
+        from property_details
+        group by PROVINCE
+        select top 1 * from property_details
+--27. What is the average monthly repayment per province?
+         select province,avg(cast(monthly_repayment as decimal (10,2))) as avgbr
+        from property_details
+        group by PROVINCE
+--28. What is the average once-off cost per province?
+        select province,avg(cast(Total_Once_off_Costs as decimal (10,2))) as avgbr
+        from property_details
+        group by PROVINCE
+--29. What is the average minimum gross monthly income per province?
+        select province,avg(cast(Min_Gross_Monthly_Income as decimal (10,2))) as avgbr
+        from property_details
+        group by PROVINCE
+--30. What is the average property price for properties above R3,000,000?
+       select avg(cast(property_price as decimal (10,2))) as avgrd
+       from property_details
+       where PROPERTY_PRICE > '3000000'
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --SECTION 4 – GROUP BY + Filtering (10 Questions)
 
