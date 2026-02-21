@@ -111,13 +111,13 @@
 
 --19. What is the total property value for properties priced above R4,000,000?
          
-        select sum(cast(property_price as bigint)) as kn
+        select sum(cast(property_price as bigint)) as TotalValue 
         from property_details
         where property_price > '4000000'
 
 --20. What is the total minimum gross monthly income required per province?
           
-          select province, sum(cast(min_gross_monthly_income as bigint )) as kk
+          select province, sum(cast(min_gross_monthly_income as bigint )) as RequiredIncome
           from property_details
           group by province
 
@@ -129,59 +129,92 @@
 
 --21. What is the average property price overall?
       
-      select avg(cast (property_price as decimal(10,2))) as Overall_price 
+      select avg(cast (property_price as decimal(18,2))) as Overall_price 
       from property_details
 
      
 --22. What is the average property price per province?
-       select province, avg(cast(property_price as decimal (10,2))) as avg_prty
+       select province, avg(cast(property_price as decimal (18,2))) as avg_prty
        from property_details
        group by PROVINCE
 
 --23. What is the average property price per city?
-       select city,avg(cast(property_price as decimal (10,2))) as avg_cty
+       select city,avg(cast(property_price as decimal (18,2))) as avg_cty
        from property_details 
        group by city 
 
 --24. What is the average number of bedrooms per province?
-        select province,avg(cast(bedrooms as decimal (10,2))) as avgbr
+        select province,avg(cast(bedrooms as decimal (18,2))) as average_number_of_bedrooms_per_province
         from property_details
         group by PROVINCE
 
 --25. What is the average number of bathrooms per province?
-       select province,avg(cast(bathrooms as decimal (10,2))) as avgbr
+       select province,avg(cast(bathrooms as decimal (18,2))) as average_number_of_bathrooms_per_province
         from property_details
         group by PROVINCE
 --26. What is the average floor size per province?
-       select province,avg(cast(floor_size as decimal (10,2))) as avgbr
+        select province,avg(cast(floor_size as decimal (18,2))) as average_floor_size_per_province
         from property_details
         group by PROVINCE
         select top 1 * from property_details
 --27. What is the average monthly repayment per province?
-         select province,avg(cast(monthly_repayment as decimal (10,2))) as avgbr
+        select province,avg(cast(monthly_repayment as decimal (18,2))) as average_monthly_repayment_per_province
         from property_details
         group by PROVINCE
 --28. What is the average once-off cost per province?
-        select province,avg(cast(Total_Once_off_Costs as decimal (10,2))) as avgbr
+        select province,avg(cast(Total_Once_off_Costs as decimal (18,2))) as average_once_off_cost_per_province
         from property_details
         group by PROVINCE
 --29. What is the average minimum gross monthly income per province?
-        select province,avg(cast(Min_Gross_Monthly_Income as decimal (10,2))) as avgbr
+        select province,avg(cast(Min_Gross_Monthly_Income as decimal (18,2))) as average_minimum_gross_monthly_income_per_province
         from property_details
         group by PROVINCE
 --30. What is the average property price for properties above R3,000,000?
-       select avg(cast(property_price as decimal (10,2))) as avgrd
+       select avg(cast(property_price as decimal (18,2))) as average_propertyprice_for_properties_above_3m
        from property_details
        where PROPERTY_PRICE > '3000000'
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --SECTION 4 – GROUP BY + Filtering (10 Questions)
 
 --31. Which province has the highest average property price?
+      select province, avg(cast(property_price as decimal  (18,2))) as highest_average_property_price
+      from property_details
+      group by PROVINCE 
+      order by highest_average_property_price desc
+      
 --32. Which province has the lowest average property price?
+      select province, avg(cast(property_price as decimal  (18,2))) as Lowest_average_property_price
+      from property_details
+      group by PROVINCE 
+      order by Lowest_average_property_price asc
+
 --33. Which city has the highest total property value?
+         select  top 1 city, sum(cast(property_price as decimal(18,2))) as Highest_total_property_value
+         from property_details
+         group by city 
+         order by Highest_total_property_value desc
+
+
 --34. Which city has the lowest average property price?
+         select  top 1 city, avg(cast(property_price as decimal(18,2))) as Lowest_total_property_value
+         from property_details
+         group by city 
+         order by Lowest_total_property_value asc 
+
 --35. How many properties per province are priced above R2,000,000?
+      select province, count(*) as properties_per_province
+      from property_details
+      where property_price > 2000000
+      group by PROVINCE
+
+       
 --36. What is the average floor size per province for properties above R3,000,000?
+        select province, avg(cast(floor_size as decimal (18,2))) as average_floor_size_per_province
+        from property_details
+        where property_price > 3000000
+        group by PROVINCE
+      
+
 --37. What is the total property value per province for properties with 3 or more bedrooms?
 --38. What is the average monthly repayment per province for properties above R4,000,000?
 --39. How many properties per city have parking for 2 or more cars?
