@@ -213,9 +213,30 @@
         from property_details
         where property_price > 3000000
         group by PROVINCE
-      
-
+     
 --37. What is the total property value per province for properties with 3 or more bedrooms?
+      select province, sum(cast(property_price as bigint)) as total_property_value
+      from property_details
+      where BEDROOMS >=3
+      group by PROVINCE
+
+
 --38. What is the average monthly repayment per province for properties above R4,000,000?
+      select province, avg(cast(Monthly_Repayment as decimal(18,2))) as avg_monthly_repayment
+      from property_details
+      where PROPERTY_PRICE > 4000000
+      group by PROVINCE
+
+
 --39. How many properties per city have parking for 2 or more cars?
+         select city, count(*)
+         from property_details
+         where PARKING >=2
+         group by city
+
 --40. What is the average minimum gross monthly income per province for properties above R5,000,000?
+       select province, avg(cast(Min_Gross_Monthly_Income as decimal(18,2))) as avg_min_gross_income
+       from property_details
+       where PROPERTY_PRICE > 5000000
+       group by province
+
